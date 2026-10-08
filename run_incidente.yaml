@@ -1,0 +1,6 @@
+# Run usada para demonstrar o diagnóstico de um incidente.
+# Taxa de aprendizado exagerada -> perda oscila/explode e a validação piora.
+nome_run: "D-incidente-taxa-alta"
+treino:
+  taxa_aprendizado: 0.5
+  l2: 0.0

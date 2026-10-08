@@ -1,0 +1,4 @@
+nome_run: "C-com-L2"
+treino:
+  taxa_aprendizado: 0.01
+  l2: 1.0e-5

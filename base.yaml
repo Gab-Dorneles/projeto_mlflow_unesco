@@ -1,0 +1,24 @@
+# Parâmetros COMPARTILHADOS pelas três runs (arquitetura, split, semente, épocas).
+# As runs A, B e C só alteram taxa de aprendizado e L2.
+experimento: "mlp-unesco-rd-opri"
+tracking_uri: "sqlite:///mlflow.db"
+
+dados:
+  arquivo: "data/processed/dataset.csv"
+  resumo: "data/processed/resumo_dados.json"
+  coluna_alvo: "classe"
+
+split:
+  teste: 0.20        # reservado: só é usado UMA vez, no modelo escolhido
+  validacao: 0.20    # usado para comparar as runs
+  estratificado: true
+
+semente: 42
+
+modelo:
+  camadas_ocultas: [16, 16]
+
+treino:
+  epocas: 300
+  taxa_aprendizado: 0.01
+  l2: 0.0

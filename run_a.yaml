@@ -1,0 +1,4 @@
+nome_run: "A-referencia"
+treino:
+  taxa_aprendizado: 0.01
+  l2: 0.0

@@ -1,0 +1,4 @@
+nome_run: "B-taxa-menor"
+treino:
+  taxa_aprendizado: 0.001
+  l2: 0.0
