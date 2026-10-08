@@ -1,39 +1,39 @@
-# Treinamento observÃ¡vel â€” MLP com indicadores de P&D da UNESCO
+# Treinamento observável — MLP com indicadores de P&D da UNESCO
 
-Atividade prÃ¡tica avaliativa â€” Sistemas de InformaÃ§Ã£o / Unitins
+Atividade prática avaliativa — Sistemas de Informação / Unitins
 Autora: Gabriela Dorneles Brasil Santos Andrade
 
 ## Problema
 
-**A participaÃ§Ã£o feminina na pesquisa acadÃªmica e governamental de um paÃ­s prevÃª a participaÃ§Ã£o feminina no setor empresarial?**
+**A participação feminina na pesquisa acadêmica e governamental de um país prevê a participação feminina no setor empresarial?**
 
-- **Alvo:** `FRESP.SP.THC.BUSENTSP` â€” pesquisadoras como % do total de pesquisadores (contagem de pessoas, HC) no setor empresarial, em 3 classes: baixa (< 25%), intermediÃ¡ria (25â€“40%) e alta (â‰¥ 40%).
-- **Entradas:** a mesma proporÃ§Ã£o nos setores de ensino superior (`FRESP.SP.THC.HIEDUSP`), governo (`FRESP.SP.THC.GOVSP`) e instituiÃ§Ãµes privadas sem fins lucrativos (`FRESP.SP.THC.PRNPSP`).
-- **Dataset final:** 106 paÃ­ses (36 baixa, 52 intermediÃ¡ria, 18 alta).
+- **Alvo:** `FRESP.SP.THC.BUSENTSP` — pesquisadoras como % do total de pesquisadores (contagem de pessoas, HC) no setor empresarial, em 3 classes: baixa (< 25%), intermediária (25–40%) e alta (≥ 40%).
+- **Entradas:** a mesma proporção nos setores de ensino superior (`FRESP.SP.THC.HIEDUSP`), governo (`FRESP.SP.THC.GOVSP`) e instituições privadas sem fins lucrativos (`FRESP.SP.THC.PRNPSP`).
+- **Dataset final:** 106 países (36 baixa, 52 intermediária, 18 alta).
 
-Indicadores do arquivo **nÃ£o usados**, por vazamento de informaÃ§Ã£o:
-- `FRESP.THC` e `FRESP.TFTE`: total do paÃ­s, que jÃ¡ contÃ©m o setor empresarial;
-- `FRESP.SP.TFTE.BUSENTSP`: o prÃ³prio alvo medido em tempo integral (FTE);
-- demais versÃµes FTE: redundantes com as versÃµes HC.
+Indicadores do arquivo **não usados**, por vazamento de informação:
+- `FRESP.THC` e `FRESP.TFTE`: total do país, que já contém o setor empresarial;
+- `FRESP.SP.TFTE.BUSENTSP`: o próprio alvo medido em tempo integral (FTE);
+- demais versões FTE: redundantes com as versões HC.
 
-Como as classes sÃ£o desbalanceadas, a comparaÃ§Ã£o entre runs usa o **F1 macro** alÃ©m da acurÃ¡cia.
+Como as classes são desbalanceadas, a comparação entre runs usa o **F1 macro** além da acurácia.
 
-Fonte: UNESCO DataHub, *R&D â€“ Other Policy Relevant Indicators (OPRI)*, identificador `uis005`, formato CSV.
+Fonte: UNESCO DataHub, *R&D – Other Policy Relevant Indicators (OPRI)*, identificador `uis005`, formato CSV.
 
-O treinamento Ã© configurÃ¡vel (arquivos YAML), rastreÃ¡vel (MLflow Tracking com parÃ¢metros, mÃ©tricas por Ã©poca e artefatos) e observÃ¡vel (MLflow Tracing com os spans `preparar`, `treinar` e `validar`).
+O treinamento é configurável (arquivos YAML), rastreável (MLflow Tracking com parâmetros, métricas por época e artefatos) e observável (MLflow Tracing com os spans `preparar`, `treinar` e `validar`).
 
 ## Estrutura
 
 ```
-config/base.yaml            parÃ¢metros comuns: arquitetura, split, semente, Ã©pocas
-config/run_a.yaml           A â€” referÃªncia   (lr 0.01,  L2 0)
-config/run_b.yaml           B â€” taxa menor   (lr 0.001, L2 0)
-config/run_c.yaml           C â€” com L2       (lr 0.01,  L2 1e-5)
-config/run_incidente.yaml   D â€” taxa alta (lr 0.5); nÃ£o foi usada nesta entrega
-preparar_dados.py           CSV da UNESCO -> tabela paÃ­s Ã— indicador + classe
-treinar.py                  treino PyTorch + MLflow (uma run por configuraÃ§Ã£o)
-rodar_experimentos.py       um comando, trÃªs configuraÃ§Ãµes
-avaliar_teste.py            avaliaÃ§Ã£o ÃšNICA no teste reservado da run escolhida
+config/base.yaml            parâmetros comuns: arquitetura, split, semente, épocas
+config/run_a.yaml           A — referência   (lr 0.01,  L2 0)
+config/run_b.yaml           B — taxa menor   (lr 0.001, L2 0)
+config/run_c.yaml           C — com L2       (lr 0.01,  L2 1e-5)
+config/run_incidente.yaml   D — taxa alta (lr 0.5); não foi usada nesta entrega
+preparar_dados.py           CSV da UNESCO -> tabela país × indicador + classe
+treinar.py                  treino PyTorch + MLflow (uma run por configuração)
+rodar_experimentos.py       um comando, três configurações
+avaliar_teste.py            avaliação ÚNICA no teste reservado da run escolhida
 verificar_traces.py         lista os traces gravados e a run de cada um
 ```
 
@@ -41,7 +41,7 @@ verificar_traces.py         lista os traces gravados e a run de cada um
 
 ### 1. Ambiente
 
-Python 3.10 ou superior. VersÃµes usadas nesta entrega: Python 3.13 e MLflow 3.16.1, no Windows (PowerShell).
+Python 3.10 ou superior. Versões usadas nesta entrega: Python 3.13 e MLflow 3.16.1, no Windows (PowerShell).
 
 ```powershell
 python -m venv .venv
@@ -49,46 +49,46 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-Se o PowerShell bloquear a ativaÃ§Ã£o, rode antes `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+Se o PowerShell bloquear a ativação, rode antes `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
 
 ### 2. Dados
 
-Baixe o CSV em data.unesco.org (dataset `uis005`, Export â†’ CSV) e salve como `data/raw/opri.csv`.
+Baixe o CSV em data.unesco.org (dataset `uis005`, Export → CSV) e salve como `data/raw/opri.csv`.
 
-Liste os indicadores e quantos paÃ­ses tÃªm dado:
+Liste os indicadores e quantos países têm dado:
 
 ```powershell
 python preparar_dados.py --entrada data/raw/opri.csv --listar
 ```
 
-Gere o dataset (uma linha sÃ³):
+Gere o dataset (uma linha só):
 
 ```powershell
-python preparar_dados.py --entrada data/raw/opri.csv --alvo FRESP.SP.THC.BUSENTSP --entradas FRESP.SP.THC.HIEDUSP FRESP.SP.THC.GOVSP FRESP.SP.THC.PRNPSP --limites 25 40 --nomes_classes baixa intermediaria alta --justificativa "totais e versÃ£o FTE do setor empresarial excluÃ­dos por conterem o alvo"
+python preparar_dados.py --entrada data/raw/opri.csv --alvo FRESP.SP.THC.BUSENTSP --entradas FRESP.SP.THC.HIEDUSP FRESP.SP.THC.GOVSP FRESP.SP.THC.PRNPSP --limites 25 40 --nomes_classes baixa intermediaria alta --justificativa "totais e versão FTE do setor empresarial excluídos por conterem o alvo"
 ```
 
-DecisÃµes tomadas nesta etapa (registradas em `data/processed/resumo_dados.json`, que tambÃ©m vai como artefato de cada run):
+Decisões tomadas nesta etapa (registradas em `data/processed/resumo_dados.json`, que também vai como artefato de cada run):
 
-- usa o valor **mais recente** de cada paÃ­s a partir de 2010;
+- usa o valor **mais recente** de cada país a partir de 2010;
 - entradas escolhidas manualmente, com a justificativa registrada no resumo;
-- paÃ­ses sem o valor do alvo sÃ£o descartados; faltantes nas entradas ficam para a imputaÃ§Ã£o;
-- **nÃ£o** imputa nem padroniza aqui: isso Ã© feito em `treinar.py`, ajustado apenas no treino.
+- países sem o valor do alvo são descartados; faltantes nas entradas ficam para a imputação;
+- **não** imputa nem padroniza aqui: isso é feito em `treinar.py`, ajustado apenas no treino.
 
-### 3. Rodar as trÃªs runs (um comando)
+### 3. Rodar as três runs (um comando)
 
 ```powershell
 python rodar_experimentos.py
 ```
 
-Arquitetura (MLP 16-16), split (60/20/20 estratificado), semente (42) e Ã©pocas (300) sÃ£o iguais nas trÃªs runs. SÃ³ mudam taxa de aprendizado e L2.
+Arquitetura (MLP 16-16), split (60/20/20 estratificado), semente (42) e épocas (300) são iguais nas três runs. Só mudam taxa de aprendizado e L2.
 
-### 4. Run do diagnÃ³stico (parada antecipada)
+### 4. Run do diagnóstico (parada antecipada)
 
 ```powershell
 python treinar.py --config config/run_a.yaml --epocas 9 --nome_run E-parada-antecipada
 ```
 
-Mesma configuraÃ§Ã£o da run A, com 9 Ã©pocas (a melhor `val_loss` de A foi na Ã©poca 8, contando a partir de 0).
+Mesma configuração da run A, com 9 épocas (a melhor `val_loss` de A foi na época 8, contando a partir de 0).
 
 ### 5. Ver e comparar no MLflow
 
@@ -96,7 +96,7 @@ Mesma configuraÃ§Ã£o da run A, com 9 Ã©pocas (a melhor `val_loss` de A foi
 mlflow server --backend-store-uri sqlite:///mlflow.db --workers 1
 ```
 
-O `--workers 1` evita o erro `WinError 10022` no Windows. Abra http://127.0.0.1:5000, entre no experimento `mlp-unesco-rd-opri`, escolha **Model training** â†’ **Runs** e use a visÃ£o de grÃ¡ficos para comparar as curvas.
+O `--workers 1` evita o erro `WinError 10022` no Windows. Abra http://127.0.0.1:5000, entre no experimento `mlp-unesco-rd-opri`, escolha **Model training** → **Runs** e use a visão de gráficos para comparar as curvas.
 
 Para conferir os traces pelo terminal:
 
@@ -110,35 +110,35 @@ python verificar_traces.py
 python avaliar_teste.py --run_id <RUN_ID_ESCOLHIDA>
 ```
 
-O script grava `test_accuracy`, `test_f1_macro`, `test_loss` e a matriz de confusÃ£o do teste na prÃ³pria run e marca a tag `avaliado_no_teste=sim`. Uma segunda execuÃ§Ã£o Ã© recusada.
+O script grava `test_accuracy`, `test_f1_macro`, `test_loss` e a matriz de confusão do teste na própria run e marca a tag `avaliado_no_teste=sim`. Uma segunda execução é recusada.
 
 ## O que cada run registra
 
-| Tipo | ConteÃºdo |
+| Tipo | Conteúdo |
 |---|---|
-| ParÃ¢metros | taxa de aprendizado, L2, Ã©pocas, arquitetura, semente, fraÃ§Ãµes do split, estratificaÃ§Ã£o, dataset |
-| Tags | commit do git, versÃµes de Python, PyTorch e MLflow |
-| MÃ©tricas por Ã©poca | `train_loss`, `val_loss`, `val_accuracy` |
-| MÃ©tricas finais | `val_f1_macro_final`, `val_accuracy_final`, `melhor_epoca_val_loss`, `gap_perda_val_menos_treino` |
+| Parâmetros | taxa de aprendizado, L2, épocas, arquitetura, semente, frações do split, estratificação, dataset |
+| Tags | commit do git, versões de Python, PyTorch e MLflow |
+| Métricas por época | `train_loss`, `val_loss`, `val_accuracy` |
+| Métricas finais | `val_f1_macro_final`, `val_accuracy_final`, `melhor_epoca_val_loss`, `gap_perda_val_menos_treino` |
 | Artefatos | `modelo.pt`, `preprocessamento.joblib`, `resumo_preprocessamento.json`, `curvas.png`, `matriz_confusao_validacao.png`, `config_efetiva.yaml`, `resumo_dados.json` |
-| Trace | `pipeline_treinamento` â†’ `preparar`, `treinar`, `validar` (duraÃ§Ã£o, entradas, saÃ­das e erros) |
+| Trace | `pipeline_treinamento` → `preparar`, `treinar`, `validar` (duração, entradas, saídas e erros) |
 
 ## Resultados
 
-ValidaÃ§Ã£o com 21 paÃ­ses, mesmo split em todas as runs.
+Validação com 21 países, mesmo split em todas as runs.
 
-| Run | lr | L2 | Ã‰pocas | Melhor Ã©poca (val_loss) | val_loss final | val_accuracy | val_F1 macro | ObservaÃ§Ã£o das curvas |
+| Run | lr | L2 | Épocas | Melhor época (val_loss) | val_loss final | val_accuracy | val_F1 macro | Observação das curvas |
 |---|---|---|---|---|---|---|---|---|
-| A | 0.01 | 0 | 300 | 8 | 7,5600 | 0,429 | 0,397 | train_loss perto de zero; val_loss sobe sem parar depois do inÃ­cio (overfitting) |
-| B | 0.001 | 0 | 300 | 83 | 1,1696 | 0,476 | 0,361 | train_loss desce devagar; val_loss quase estÃ¡vel perto de 1,0 |
+| A | 0.01 | 0 | 300 | 8 | 7,5600 | 0,429 | 0,397 | train_loss perto de zero; val_loss sobe sem parar depois do início (overfitting) |
+| B | 0.001 | 0 | 300 | 83 | 1,1696 | 0,476 | 0,361 | train_loss desce devagar; val_loss quase estável perto de 1,0 |
 | C | 0.01 | 1e-5 | 300 | 8 | 10,9169 | 0,429 | 0,344 | igual a A: o L2 de 1e-5 foi fraco demais para frear o overfitting |
-| E | 0.01 | 0 | 9 | â€” | 1,0165 | 0,524 | 0,367 | run A parada na melhor Ã©poca |
+| E | 0.01 | 0 | 9 | — | 1,0165 | 0,524 | 0,367 | run A parada na melhor época |
 
-As execuÃ§Ãµes foram repetidas do zero e reproduziram exatamente os mesmos valores de validaÃ§Ã£o.
+As execuções foram repetidas do zero e reproduziram exatamente os mesmos valores de validação.
 
-**Modelo escolhido: E-parada-antecipada**, por ter a menor `val_loss`. A acurÃ¡cia e o F1 nÃ£o foram usados para desempatar, porque as diferenÃ§as entre as runs equivalem a 1 ou 2 paÃ­ses.
+**Modelo escolhido: E-parada-antecipada**, por ter a menor `val_loss`. A acurácia e o F1 não foram usados para desempatar, porque as diferenças entre as runs equivalem a 1 ou 2 países.
 
-**Teste reservado (22 paÃ­ses), avaliado uma Ãºnica vez na run E:** acurÃ¡cia 0,500, F1 macro 0,364, perda 1,0402.
+**Teste reservado (22 países), avaliado uma única vez na run E:** acurácia 0,500, F1 macro 0,364, perda 1,0402.
 
 | Classe | precision | recall | f1-score | support |
 |---|---|---|---|---|
@@ -146,23 +146,23 @@ As execuÃ§Ãµes foram repetidas do zero e reproduziram exatamente os mesmos v
 | baixa | 0,50 | 0,57 | 0,53 | 7 |
 | intermediaria | 0,50 | 0,64 | 0,56 | 11 |
 
-## DiagnÃ³stico de incidentes
+## Diagnóstico de incidentes
 
 **1. Overfitting nas runs A e C**
 - Sintoma: `val_loss` subindo continuamente enquanto `train_loss` vai a quase zero.
-- HipÃ³tese: treino longo demais para a taxa de 0.01 (melhor Ã©poca = 8 de 300).
-- Nova run: E, igual a A com 9 Ã©pocas. A `val_loss` caiu de 7,56 para 1,02, confirmando a hipÃ³tese.
+- Hipótese: treino longo demais para a taxa de 0.01 (melhor época = 8 de 300).
+- Nova run: E, igual a A com 9 épocas. A `val_loss` caiu de 7,56 para 1,02, confirmando a hipótese.
 
 **2. Traces sobrescritos**
 - Sintoma: o MLflow mostrava 1 trace para 4 runs, com os spans duplicados.
-- HipÃ³tese: o ID do trace era sempre o mesmo, `bdd640fb06671ad11c80317fa3b1799d`, que Ã© o primeiro nÃºmero gerado pelo mÃ³dulo `random` do Python depois de `random.seed(42)`. O MLflow usa esse gerador para criar os IDs, e o `treinar.py` fixava essa semente no inÃ­cio de cada run.
-- CorreÃ§Ã£o: o `random` do Python deixou de ser semeado (o treino nÃ£o depende dele). Depois de rodar tudo de novo, `verificar_traces.py` mostrou 4 traces, um por run.
+- Hipótese: o ID do trace era sempre o mesmo, `bdd640fb06671ad11c80317fa3b1799d`, que é o primeiro número gerado pelo módulo `random` do Python depois de `random.seed(42)`. O MLflow usa esse gerador para criar os IDs, e o `treinar.py` fixava essa semente no início de cada run.
+- Correção: o `random` do Python deixou de ser semeado (o treino não depende dele). Depois de rodar tudo de novo, `verificar_traces.py` mostrou 4 traces, um por run.
 
-## LimitaÃ§Ãµes
+## Limitações
 
-- Com 21 paÃ­ses na validaÃ§Ã£o e 22 no teste, uma diferenÃ§a de 1 paÃ­s muda a acurÃ¡cia em cerca de 5 pontos percentuais. DiferenÃ§as pequenas entre runs sÃ£o inconclusivas.
-- A acurÃ¡cia no teste (0,500) Ã© igual Ã  de um classificador que sempre responde a classe mais frequente (11 de 22 paÃ­ses sÃ£o "intermediaria"). O modelo nÃ£o acertou nenhum paÃ­s da classe "alta". As 3 entradas tÃªm pouco poder preditivo para o alvo.
-- O nÃºmero de Ã©pocas da run E foi escolhido olhando a validaÃ§Ã£o, por isso o resultado de validaÃ§Ã£o dela pode ser otimista. O teste reservado serve para essa verificaÃ§Ã£o: a acurÃ¡cia, o F1 e a perda no teste ficaram prÃ³ximos dos da validaÃ§Ã£o.
+- Com 21 países na validação e 22 no teste, uma diferença de 1 país muda a acurácia em cerca de 5 pontos percentuais. Diferenças pequenas entre runs são inconclusivas.
+- A acurácia no teste (0,500) é igual à de um classificador que sempre responde a classe mais frequente (11 de 22 países são "intermediaria"). O modelo não acertou nenhum país da classe "alta". As 3 entradas têm pouco poder preditivo para o alvo.
+- O número de épocas da run E foi escolhido olhando a validação, por isso o resultado de validação dela pode ser otimista. O teste reservado serve para essa verificação: a acurácia, o F1 e a perda no teste ficaram próximos dos da validação.
 
 .venv/
 __pycache__/
