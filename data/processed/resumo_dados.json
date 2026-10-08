@@ -1,0 +1,35 @@
+{
+  "fonte": "UNESCO DataHub – R&D Other Policy Relevant Indicators (uis005)",
+  "arquivo_origem": "data/raw/opri.csv",
+  "ano_minimo": 2010,
+  "regra_ano": "valor mais recente de cada país a partir do ano mínimo",
+  "indicador_alvo": "FRESP.SP.THC.BUSENTSP",
+  "descricao_alvo": "Female researchers as a percentage of total researchers (HC) - Business enterprise",
+  "limites_classes": [
+    25.0,
+    40.0
+  ],
+  "nomes_classes": [
+    "baixa",
+    "intermediaria",
+    "alta"
+  ],
+  "entradas": {
+    "FRESP.SP.THC.HIEDUSP": "Female researchers as a percentage of total researchers (HC) - Higher education",
+    "FRESP.SP.THC.GOVSP": "Female researchers as a percentage of total researchers (HC) - Government",
+    "FRESP.SP.THC.PRNPSP": "Female researchers as a percentage of total researchers (HC) - Private non-profit"
+  },
+  "selecao_entradas": "manual (--entradas): totais e versão FTE do setor empresarial excluídos por conterem o alvo",
+  "n_paises": 106,
+  "distribuicao_classes": {
+    "intermediaria": 52,
+    "baixa": 36,
+    "alta": 18
+  },
+  "faltantes_por_entrada_%": {
+    "FRESP.SP.THC.HIEDUSP": 2.8,
+    "FRESP.SP.THC.GOVSP": 1.9,
+    "FRESP.SP.THC.PRNPSP": 19.8
+  },
+  "observacao": "Imputação (mediana) e padronização são ajustadas só no treino, em treinar.py."
+}
